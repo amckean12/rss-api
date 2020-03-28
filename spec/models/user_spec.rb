@@ -23,7 +23,7 @@ RSpec.describe User, type: :model do
 
   #Password Test Cases
   it 'is not valid without password' do 
-    should validate_preseence_of(:password)
+    should validate_presence_of(:password)
   end
   it 'is not valid without password length greater than 5 characters' do 
     should ensure_length_of(:password).is_at_least(6)
