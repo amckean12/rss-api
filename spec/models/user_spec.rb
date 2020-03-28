@@ -21,7 +21,7 @@ RSpec.describe User, type: :model do
     should validate_length_of(:username).is_at_most(32)
   end
 
-  #Password Test Cases
+  #Core Password Test Cases
   it 'is not valid without password' do 
     should validate_presence_of(:password)
   end
