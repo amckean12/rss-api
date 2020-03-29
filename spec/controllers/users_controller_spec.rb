@@ -11,7 +11,4 @@ RSpec.describe UsersController, type: :controller do
     it "should route => GET: users to the users controller, index action" do 
         expect(GET: "/users").to route_to(controller: 'users', action: 'index') 
     end
-    it "should route => DELETE: user/1 to the users controller, delete action, user id of 1" do 
-        expect(DELETE: "/users/1").to route_to(controller: 'users', action: 'delete', id:'1') 
-    end
 end
