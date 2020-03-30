@@ -13,8 +13,8 @@ class UsersController < ApplicationController
             'status' => 'ok', 
             'user_data' => @user,
             'article_count' => find_user_article_count,
-            'oldest_article' => "Hello World",
-            'newest_article' => "Goodbye World",
+            'oldest_article' => find_user_oldest_article,
+            'newest_article' => find_user_newest_article,
             'article_history' => @user_articles
         })
     end
@@ -38,12 +38,7 @@ class UsersController < ApplicationController
                 @user_articles << article
             end
         end
-
         @user_articles
-    end
-
-    def gather_article_dates
-        
     end
 
     def find_user_article_count 
@@ -51,9 +46,31 @@ class UsersController < ApplicationController
     end
 
     def find_user_oldest_article
+        oldest_article = @user_articles.first
+
+        @user_articles.each do |article|
+            case article
+            when oldest_article.published_date > article.published_date
+                oldest_article = oldest_article
+            else
+                oldest_article = article
+            end
+        end
+        oldest_article
     end
 
     def find_user_newest_article 
+        newest_article = @user_articles.first
+
+        @user_articles.each do |article|
+            case article
+            when newest_article.published_date < article.published_date
+                newest_article = article
+            else
+                newest_article = newest_article
+            end
+        end
+        newest_article
     end
 
     def user_params
