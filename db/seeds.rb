@@ -17,4 +17,5 @@ Article.create(title: "This is Article Title 1",
 article_link: "https://www.google.com/", 
 published_date: Time.parse("8:47am Dec 7th, 2019").utc,
 description: "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco",
-image: false)
+image: false,
+user_id: 1)

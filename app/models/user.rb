@@ -9,4 +9,9 @@ class User < ApplicationRecord
       message: "username only allows letters and numbers"
   }
   validates :username, length: { maximum: 32 }
+
+
+  #Model Associations
+  has_many :articles
+  
 end
