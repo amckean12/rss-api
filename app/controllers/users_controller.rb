@@ -11,10 +11,10 @@ class UsersController < ApplicationController
     def show
         render(json: {
             'status' => 'ok', 
-            'user_data' => @user,
-            'article_count' => find_user_article_count,
-            'oldest_article' => find_user_oldest_article,
-            'newest_article' => find_user_newest_article,
+            'user_data' => render_user_data,
+            'article_count' => render_user_article_count,
+            'oldest_article' => render_user_oldest_article,
+            'newest_article' => render_user_newest_article,
             'article_history' => @user_articles
         })
     end
@@ -41,11 +41,18 @@ class UsersController < ApplicationController
         @user_articles
     end
 
-    def find_user_article_count 
+    def render_user_data
+        user = {
+            'id': @user.id,
+            'username': @user.username
+        }
+    end
+
+    def render_user_article_count 
         @user_articles.length()
     end
 
-    def find_user_oldest_article
+    def render_user_oldest_article
         oldest_article = @user_articles.first
 
         @user_articles.each do |article|
@@ -59,7 +66,7 @@ class UsersController < ApplicationController
         oldest_article
     end
 
-    def find_user_newest_article 
+    def render_user_newest_article 
         newest_article = @user_articles.first
 
         @user_articles.each do |article|
