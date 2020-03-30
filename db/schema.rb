@@ -10,17 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_29_190725) do
+ActiveRecord::Schema.define(version: 2020_03_30_152339) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.string "article_link"
     t.datetime "published_date"
     t.text "description"
-    t.string "image_present"
-    t.string "boolean"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "image"
   end
 
   create_table "users", force: :cascade do |t|
