@@ -5,7 +5,8 @@ class UsersController < ApplicationController
     def index
         render(json: {
             'status' => 'ok', 
-            'users' => User.all()})
+            'users' => User.all()
+        })
     end
 
     def show
