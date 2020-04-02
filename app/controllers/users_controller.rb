@@ -14,6 +14,7 @@ class UsersController < ApplicationController
             'status' => 'ok', 
             'user_data' => render_user_data,
             'article_count' => render_user_article_count,
+            'article_count_img' => render_user_article_count_with_image,
             'oldest_article' => render_user_oldest_article,
             'newest_article' => render_user_newest_article,
             'article_history' => @user_articles
@@ -51,6 +52,17 @@ class UsersController < ApplicationController
 
     def render_user_article_count 
         @user_articles.length()
+    end
+
+    def render_user_article_count_with_image 
+        article_img_count = 0
+        
+        @user_articles.each do |article| 
+            if article.image == true 
+                article_img_count = article_img_count + 1
+            end
+        end
+        article_img_count
     end
 
     def render_user_oldest_article
