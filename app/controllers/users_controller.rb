@@ -3,26 +3,59 @@ class UsersController < ApplicationController
     before_action :find_user_article_history, only: [:show]
 
     def index
-        render(json: {
-            'status' => 'ok', 
-            'users' => User.all()
-        })
+        @users = User.all
+        if @users 
+            render(json: {
+                'status' => 'ok', 
+                'users' => @users
+            })
+        else
+            render json: {
+                status: 500,
+                errors: ['no users found']
+              }
+        end 
     end
 
     def show
-        render(json: {
-            'status' => 'ok', 
-            'user_data' => render_user_data,
-            'article_count' => render_user_article_count,
-            'article_count_img' => render_user_article_count_with_image,
-            'oldest_article' => render_user_oldest_article,
-            'newest_article' => render_user_newest_article,
-            'article_history' => @user_articles
-        })
+        @user = User.find(params[:id])
+        if @user    
+            render(json: {
+                'status' => 'ok', 
+                'user_data' => render_user_data,
+                'article_count' => render_user_article_count,
+                'article_count_img' => render_user_article_count_with_image,
+                'oldest_article' => render_user_oldest_article,
+                'newest_article' => render_user_newest_article,
+                'article_history' => @user_articles
+            })
+        else
+            render json: {
+                status: 500,
+                errors: ['user not found']
+              }
+        end
     end
 
     def create
         @user = User.new(user_params)
+        if @user.save
+            login!
+            render json: {
+                status: :created,
+                'user_data' => render_user_data,
+                'article_count' => render_user_article_count,
+                'article_count_img' => render_user_article_count_with_image,
+                'oldest_article' => render_user_oldest_article,
+                'newest_article' => render_user_newest_article,
+                'article_history' => @user_articles
+            }
+        else 
+            render json: {
+                status: 500,
+                errors: @user.errors.full_messages
+            }
+        end
     end
 
     private
