@@ -13,9 +13,6 @@ class UsersController < ApplicationController
         if @user.authenticate(params[:password])
             render(json: {
                 'status' => 'ok', 
-                'password' => @user,
-                'other' => params[:password],
-                'other2' => params[:user][:password],
                 'user_data' => render_user_data,
                 'article_count' => render_user_article_count,
                 'article_count_img' => render_user_article_count_with_image,
@@ -43,8 +40,17 @@ class UsersController < ApplicationController
         })
     end
 
-    def create
-        @user = User.new(user_params)
+
+
+    def new 
+        @user = User.new(params.require(:user).permit(:username, :password, :password_confirmation))
+        if @user.save
+          render(json: {
+              'user': @user
+          })
+        else
+            puts @user.errors.to_yaml
+        end
     end
 
     private
