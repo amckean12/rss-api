@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_30_174600) do
+ActiveRecord::Schema.define(version: 2020_04_03_200543) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2020_03_30_174600) do
     t.integer "user_id"
     t.string "img_src"
     t.string "img_alt"
+    t.string "display_date"
   end
 
   create_table "users", force: :cascade do |t|

@@ -9,6 +9,29 @@ class UsersController < ApplicationController
         })
     end
 
+    def find_user
+        @user = User.find_by(email: params[:user][:email])
+        if @user
+            render(json: {
+                'status' => 'ok', 
+                'user_data' => render_user_data,
+                'article_count' => render_user_article_count,
+                'article_count_img' => render_user_article_count_with_image,
+                'oldest_article' => render_user_oldest_article,
+                'newest_article' => render_user_newest_article,
+                'article_history' => @user_articles
+            })
+        else
+            render(json: {
+                'error' => 'User not found'
+            })
+        end
+    end
+
+    def set_user
+        @user = User.find_by(id: params[:id])
+    end
+
     def show
         render(json: {
             'status' => 'ok', 
@@ -38,9 +61,15 @@ class UsersController < ApplicationController
         @articles.each do |article|
             if article.user_id == @user.id 
                 @user_articles << article
+                generate_display_date(article)
             end
         end
         @user_articles
+    end
+
+    def generate_display_date(article)
+        display_time = article.published_date.strftime("%d/%m/%Y %I:%M %p") 
+        article.display_date = display_time
     end
 
     def render_user_data
