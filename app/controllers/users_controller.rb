@@ -9,6 +9,29 @@ class UsersController < ApplicationController
         })
     end
 
+    def find_user
+        @user = User.find_by(username: params[:user][:username])
+        if @user
+            render(json: {
+                'status' => 'ok', 
+                'user_data' => render_user_data,
+                'article_count' => render_user_article_count,
+                'article_count_img' => render_user_article_count_with_image,
+                'oldest_article' => render_user_oldest_article,
+                'newest_article' => render_user_newest_article,
+                'article_history' => @user_articles
+            })
+        else
+            render(json: {
+                'error' => 'User not found'
+            })
+        end
+    end
+
+    def set_user
+        @user = User.find_by(id: params[:id])
+    end
+
     def show
         render(json: {
             'status' => 'ok', 
@@ -52,7 +75,8 @@ class UsersController < ApplicationController
     def render_user_data
         user = {
             'id': @user.id,
-            'username': @user.username
+            'username': @user.username,
+            'email': @user.email
         }
     end
 
