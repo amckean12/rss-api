@@ -75,7 +75,7 @@ class UsersController < ApplicationController
     def render_user_data
         user = {
             'id': @user.id,
-            'email': @user.email
+            'username': @user.username
         }
     end
 

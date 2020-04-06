@@ -5,8 +5,5 @@ Rails.application.routes.draw do
   get('users/:id' => 'users#show')
   get('login' => 'sessions#new')
 
-  post('user_token' => 'user_token#create')
-  post('find_user' => "users#find")
-
 end
 
