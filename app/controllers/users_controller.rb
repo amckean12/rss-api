@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     end
 
     def find_user
-        @user = User.find_by(username: params[:user][:username])
+        @user = User.find_by(email: params[:user][:email])
         if @user
             render(json: {
                 'status' => 'ok', 
@@ -75,7 +75,6 @@ class UsersController < ApplicationController
     def render_user_data
         user = {
             'id': @user.id,
-            'username': @user.username,
             'email': @user.email
         }
     end
