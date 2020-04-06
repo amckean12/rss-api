@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-    before_action :set_user, only: [:find_user]
-    before_action :find_user_article_history, only: [:find_user]
+    before_action :set_user, only: [:find_user, :show]
+    before_action :find_user_article_history, only: [:find_user, :show]
 
     def index
         render(json: {
@@ -29,15 +29,17 @@ class UsersController < ApplicationController
     end
 
     def show
-        render(json: {
-            'status' => 'ok', 
-            'user_data' => render_user_data,
-            'article_count' => render_user_article_count,
-            'article_count_img' => render_user_article_count_with_image,
-            'oldest_article' => render_user_oldest_article,
-            'newest_article' => render_user_newest_article,
-            'article_history' => @user_articles
-        })
+        if @user
+            render(json: {
+                'status' => 'ok', 
+                'user_data' => render_user_data,
+                'article_count' => render_user_article_count,
+                'article_count_img' => render_user_article_count_with_image,
+                'oldest_article' => render_user_oldest_article,
+                'newest_article' => render_user_newest_article,
+                'article_history' => @user_articles
+            })
+        end
     end
 
 
