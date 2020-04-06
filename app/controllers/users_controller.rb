@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-    before_action :set_user, only: [:show]
-    before_action :find_user_article_history, only: [:show]
+    before_action :set_user, only: [:find_user]
+    before_action :find_user_article_history, only: [:find_user]
 
     def index
         render(json: {
@@ -10,10 +10,12 @@ class UsersController < ApplicationController
     end
 
     def find_user
-        @user = User.find_by(email: params[:user][:email])
-        if @user
+        if @user.authenticate(params[:password])
             render(json: {
                 'status' => 'ok', 
+                'password' => @user,
+                'other' => params[:password],
+                'other2' => params[:user][:password],
                 'user_data' => render_user_data,
                 'article_count' => render_user_article_count,
                 'article_count_img' => render_user_article_count_with_image,
@@ -23,13 +25,10 @@ class UsersController < ApplicationController
             })
         else
             render(json: {
-                'error' => 'User not found'
+                'status' => '404',
+                'error_msg' => 'User Not Found'
             })
         end
-    end
-
-    def set_user
-        @user = User.find_by(id: params[:id])
     end
 
     def show
@@ -51,7 +50,7 @@ class UsersController < ApplicationController
     private
 
     def set_user
-        @user = User.find_by(id: params[:id])
+        @user = User.find_by(username: params[:username])
     end
 
     def find_user_article_history
