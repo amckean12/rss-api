@@ -47,9 +47,9 @@ class UsersController < ApplicationController
     def new 
         @user = User.new(params.require(:user).permit(:username, :password, :password_confirmation))
         if @user.save
-          render(json: {
-              'user': @user
-          })
+            render(json: {
+                'user': @user
+            })
         else
             puts @user.errors.to_yaml
         end
@@ -104,29 +104,41 @@ class UsersController < ApplicationController
     def render_user_oldest_article
         oldest_article = @user_articles.first
 
-        @user_articles.each do |article|
-            case article
-            when oldest_article.published_date > article.published_date
-                oldest_article = oldest_article
-            else
-                oldest_article = article
+        if oldest_article.nil?
+            oldest_article = {
+                display_date: "No Articles"
+            }
+        else
+            @user_articles.each do |article|
+                case article
+                when oldest_article.published_date > article.published_date
+                    oldest_article = oldest_article
+                else
+                    oldest_article = article
+                end
             end
+            oldest_article
         end
-        oldest_article
     end
 
     def render_user_newest_article 
         newest_article = @user_articles.first
 
-        @user_articles.each do |article|
-            case article
-            when newest_article.published_date < article.published_date
-                newest_article = article
-            else
-                newest_article = newest_article
+        if newest_article.nil?
+            newest_article = {
+                display_date: "No Articles"
+            }
+        else
+            @user_articles.each do |article|
+                case article
+                when newest_article.published_date < article.published_date
+                    newest_article = article
+                else
+                    newest_article = newest_article
+                end
             end
+            newest_article
         end
-        newest_article
     end
 
     def user_params
