@@ -64,7 +64,7 @@ published_date: Time.local(2018, 3, 30, 11, 10),
 description: "sed do eiusmod tempor incim ad minim veniam, quis nostrud exercitation ullamco",
 image: false,
 user_id: 1)
-Article.create(title: " gArticle Title 8",
+Article.create(title: "gArticle Title 8",
 article_link: "https://rubyonrails.org/", 
 published_date: Time.local(2015, 3, 30, 11, 10),
 description: "sed do eiusmod tea. Ut enim ad minim veniam, quis nostrud exercitation ullamco",
