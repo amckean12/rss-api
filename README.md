@@ -18,3 +18,4 @@ Below is a link to see the JSON view of what is serving users's profile.
 http://localhost:3001/show?username=ajmckean
 
 # Testing 
+To Run rspec test run bundle exec rspec
